@@ -1,0 +1,130 @@
+<html>
+	<head>
+		<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.min.js'></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.js"  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+		<title>Chat App</title>
+	</head>
+<style>
+body,html{
+	height:auto;
+}
+.frame{
+    background:#e0e0de;
+    height:80%;
+    overflow-y:scroll;
+    padding:0;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #d4d4d4;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #d4d4d4;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #d4d4d4;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: #d4d4d4;
+}   
+ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li{
+  display:inline-block;
+  clear: both;
+  margin-bottom: 2px;
+  font-family: Helvetica, Arial, sans-serif;
+  background: #eee;
+  width:100%;
+}
+
+.mytext{
+    border:0;padding:10px;background:whitesmoke;
+	color: #000;
+	width:100%;
+}
+.mytexthead{
+    border:0;background:whitesmoke;
+	padding:20px;
+	color: #000;
+	position:fixed;
+	width:100%;
+}
+.chatline{
+overflow: hidden; padding-right: .5em;
+}
+.send {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  flex: 0 0 auto;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 0;
+  position: relative;
+  outline: none;
+}
+
+.send .circle {
+  background: #0084ff;
+  border-radius: 50%;
+  color: #fff;
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.topSpace{
+padding-top:80px;
+}
+
+	</style>
+	<!-- <script>
+	$(document).ready(function(){
+	$(".frame").animate({ scrollTop: $(".bottom").offset().top}); 
+	});
+
+	</script> -->
+	<body ng-app="myApp">
+		<div ng-controller='ChatCtrl'>
+			
+			<div  class="frame" scroll-bottom="messages">
+			<input type="text" class="mytexthead" ng-model='filterText' placeholder='Search'>
+			
+			<ul class="topSpace">
+				<li ng-repeat='text in messages.slice().reverse() | filter : filterText' >
+					<p style="float:left;padding: 5px;font-size:.8em;color:#000; background:white;border-radius: 30px;">{{text.username}}</p>
+					<br><br><br>
+					<p style="float:left;font-size:1em">{{text.message}}</p>
+				</li>
+	
+			</ul>
+			
+			</div>
+			<button class="send" ng-click='sendMessage()' style="float: right">
+                    <div class="circle">
+                      <i>>></i>
+                    </div>
+            </button>
+			<div class="mytext">
+			<div class="chatline">
+				<input class="mytext" type="text" ng-enter='sendMessage()' ng-model='message' placeholder='Type your message' autofocus />
+			</div>
+			</div>
+			<input type="text" ng-model='userName' placeholder='Enter a username'>
+			<br>
+			
+			<br>
+			<div  class="bottom"></div>
+		</div>
+		
+		<script type='text/javascript' src='/socket.io/socket.io.js'></script>
+		<script type="text/javascript" src ="client.js"></script>
+	</body>
+</html>
